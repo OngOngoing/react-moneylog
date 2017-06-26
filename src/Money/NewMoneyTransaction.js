@@ -30,7 +30,7 @@ export default class NewMoneyTransaction extends Component {
             'date' : date,
             'info': info
         }
-        let newTransactionKey = firebase.database().ref('user/db').push(transactionData).key
+        firebase.database().ref('user/db').push(transactionData)
     }
 
     handleMoneyChange = (event) => {

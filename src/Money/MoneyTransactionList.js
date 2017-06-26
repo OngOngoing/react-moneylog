@@ -6,13 +6,11 @@ export default class MoneyTransactionList extends Component {
     /* global firebase */
     state = {
         transactions: [],
-        db: {},
     }
 
     componentDidMount() {
         firebase.database().ref('user/db').on('value', snapshot => {
             this.setState({transactions: snapshot.val()})
-            console.log(this.state.transactions)
         })
     }
     
