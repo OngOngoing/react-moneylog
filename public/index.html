@@ -26,6 +26,20 @@
       You need to enable JavaScript to run this app.
     </noscript>
     <div id="root"></div>
+    <script src="https://www.gstatic.com/firebasejs/4.1.3/firebase.js"></script>
+    
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyDxwm3gQ0XDazc21Tb_K11Ho2smSGiCA9k",
+        authDomain: "react-moneylog.firebaseapp.com",
+        databaseURL: "https://react-moneylog.firebaseio.com",
+        projectId: "react-moneylog",
+        storageBucket: "react-moneylog.appspot.com",
+        messagingSenderId: "239861337687"
+      };
+      firebase.initializeApp(config);
+    </script>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 
 export default class NewMoneyTransaction extends Component {
+    /* global firebase */
     state = {
         money: 0,
         type: '+',
@@ -10,12 +11,26 @@ export default class NewMoneyTransaction extends Component {
 
     render() {
         return (
-            <form onSubmit={this.handleSubmit}>
-                <input type="number" value={this.state.money} onChange={this.handleMoneyChange} min="0.00" step="0.01"/>
-                <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
-                <input type="submit" value="Submit" />
-            </form>
+            <div>
+                <form onSubmit={this.handleSubmit}>
+                    <input pattern="^[+-]?" value={this.state.type} onChange={this.handleChange('type')}/>
+                    <input type="number" value={this.state.money} onChange={this.handleMoneyChange} min="0.00" step="0.01"/>
+                    <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
+                    <input type="text" value={this.state.info} onChange={this.handleChange('info')}/>
+                    <input type="submit" value="Submit" />
+                </form>
+            </div>
         )
+    }
+
+    writeDataToFirebase(money, type, date, info) {
+        let transactionData = {
+            'money': money,
+            'type': type,
+            'date' : date,
+            'info': info
+        }
+        let newTransactionKey = firebase.database().ref('user/db').push(transactionData).key
     }
 
     handleMoneyChange = (event) => {
@@ -23,7 +38,6 @@ export default class NewMoneyTransaction extends Component {
     }
     handleChange = (key) => (event) => {
         this.setState({[key] : (event.target.value)})
-        console.log(this.state);
     }
 
     handleSubmit = (event) => {
@@ -34,7 +48,8 @@ export default class NewMoneyTransaction extends Component {
             'date': this.state.date,
             'info': this.state.info,
         }
-        this.props.addEvent(transaction)
+        //this.props.addEvent(transaction)
+        this.writeDataToFirebase(this.state.money, this.state.type, this.state.date.toString(), this.state.info)
         this.setState({money: 0, date: new Date(), info:'' })
     }
 }
