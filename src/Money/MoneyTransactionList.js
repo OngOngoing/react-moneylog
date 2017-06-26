@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
 import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
+import firebase from 'firebase'
 
 export default class MoneyTransactionList extends Component {
-    /* global firebase */
     state = {
         transactions: [],
     }
