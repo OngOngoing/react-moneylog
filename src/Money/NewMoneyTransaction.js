@@ -5,25 +5,36 @@ export default class NewMoneyTransaction extends Component {
         money: 0,
         type: '+',
         date: new Date(),
-        info: '...',
+        info: '',
     }
 
     render() {
         return (
             <form onSubmit={this.handleSubmit}>
-                <input type="number" value={this.state.money} onChange={this.handleChange} min="0.00" step="0.01"/>
+                <input type="number" value={this.state.money} onChange={this.handleMoneyChange} min="0.00" step="0.01"/>
+                <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
                 <input type="submit" value="Submit" />
             </form>
         )
     }
 
-    handleChange = (event) => {
+    handleMoneyChange = (event) => {
         this.setState({money : parseFloat(event.target.value)})
+    }
+    handleChange = (key) => (event) => {
+        this.setState({[key] : (event.target.value)})
+        console.log(this.state);
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
-        this.props.addEvent(this.state.money)
-        this.setState({money: 0})
+        let transaction = {
+            'money': this.state.money,
+            'type': this.state.type,
+            'date': this.state.date,
+            'info': this.state.info,
+        }
+        this.props.addEvent(transaction)
+        this.setState({money: 0, date: new Date(), info:'' })
     }
 }

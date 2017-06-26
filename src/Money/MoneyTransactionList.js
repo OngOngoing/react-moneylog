@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import MoneyTransaction from './MoneyTransaction'
+import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
 
 export default class MoneyTransactionList extends Component {
@@ -8,18 +8,30 @@ export default class MoneyTransactionList extends Component {
     }
     
     render() {
-        let transactions = this.state.transactions.map( (transaction, index) => {
-            return <li key={index}><MoneyTransaction transaction={transaction}/></li>
+        let rows = []
+        this.state.transactions.forEach((transaction, i) => {
+            rows.push(<MoneyTransactionRow key={i} transaction={transaction}/>)
         })
         return (
             <div>
-                <ul>{transactions}</ul>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Money</th>
+                            <th>Date</th>
+                            <th>Info</th>
+                        </tr>
+                    </thead>
+                    <tbody>{rows}</tbody>
+                </table>
                 <div><NewMoneyTransaction addEvent={this.addEvent} /></div>
             </div>
         )
     }
 
     addEvent = (moneyTransaction) => {
+        console.log(moneyTransaction)
         this.setState({ transactions: [...this.state.transactions, moneyTransaction] });
     }
 }
