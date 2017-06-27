@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import {Button, Table} from 'semantic-ui-react'
 import firebase from 'firebase'
+import moment from 'moment'
 
 export default class MoneyTransactionRow extends Component {
     render() {
@@ -8,7 +9,7 @@ export default class MoneyTransactionRow extends Component {
         const amountType = this.props.transaction.type === '+' ? "Income" : "Outcome"
         return (
             <Table.Row negative={!isPositive} positive={isPositive}>
-                <Table.Cell>{this.props.transaction.date.toString()}</Table.Cell>
+                <Table.Cell>{moment(this.props.transaction.date).format('LLLL')}</Table.Cell>
                 <Table.Cell>{this.props.transaction.info}</Table.Cell>
                 <Table.Cell>{amountType}</Table.Cell>
                 <Table.Cell textAlign="right"><b>$ {this.formatNumber(this.props.transaction.money)}</b></Table.Cell>

@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import {Button, Input, Label, Select, Modal} from 'semantic-ui-react'
 import firebase from 'firebase'
+import moment from 'moment'
+import Datetime from 'react-datetime'
 
 export default class NewMoneyTransaction extends Component {
     state = {
@@ -9,6 +11,7 @@ export default class NewMoneyTransaction extends Component {
         type: '+',
         date: new Date(),
         info: '',
+        moment: moment()
     }
 
     show = (dimmer) => () => this.setState({ dimmer, open: true })
@@ -33,7 +36,7 @@ export default class NewMoneyTransaction extends Component {
                             <input />
                             <Select value={this.state.type} onChange={this.handleChange('type')} compact options={typeOptions}/>
                         </Input>
-                        <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
+                        <Input><Datetime value={this.state.date} onChange={this.handleDatetimeChange}/></Input>
                         <Input placeholder='Info...' type="text" value={this.state.info} onChange={this.handleChange('info')} />
                         <Button primary>Submit</Button>
                     </form>
@@ -55,6 +58,10 @@ export default class NewMoneyTransaction extends Component {
 
     handleMoneyChange = (event) => {
         this.setState({money : parseFloat(event.target.value)})
+    }
+
+    handleDatetimeChange = (moment) => {
+        this.setState({date : moment})
     }
 
     handleChange = (key) => (event, data) => {
