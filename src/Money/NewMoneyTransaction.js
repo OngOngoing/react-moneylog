@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Button, Input, Label, Dropdown, Select} from 'semantic-ui-react'
 import firebase from 'firebase'
 
 export default class NewMoneyTransaction extends Component {
@@ -10,14 +11,21 @@ export default class NewMoneyTransaction extends Component {
     }
 
     render() {
+        const typeOptions = [
+            { key: '+', text: 'Income', value: '+' },
+            { key: '-', text: 'Outcome', value: '-' },
+        ]
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
-                    <input pattern="^[+-]?" value={this.state.type} onChange={this.handleChange('type')}/>
-                    <input type="number" value={this.state.money} onChange={this.handleMoneyChange} min="0.00" step="0.01"/>
+                    <Input labelPosition='right' type='number' value={this.state.money} onChange={this.handleMoneyChange} min="0.00" step="0.01" placeholder='Amount'>
+                        <Label basic>$</Label>
+                        <input />
+                        <Select value={this.state.type} onChange={this.handleChange('type')} compact options={typeOptions}/>
+                    </Input>
                     <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
                     <input type="text" value={this.state.info} onChange={this.handleChange('info')}/>
-                    <input type="submit" value="Submit" />
+                    <Button primary>Submit</Button>
                 </form>
             </div>
         )
@@ -36,8 +44,14 @@ export default class NewMoneyTransaction extends Component {
     handleMoneyChange = (event) => {
         this.setState({money : parseFloat(event.target.value)})
     }
-    handleChange = (key) => (event) => {
-        this.setState({[key] : (event.target.value)})
+
+    handleChange = (key) => (event, data) => {
+        if(event.target.value) {
+            this.setState({[key] : (event.target.value)})
+        }
+        else if (data.value) {
+            this.setState({[key] : (data.value)})
+        }
     }
 
     handleSubmit = (event) => {

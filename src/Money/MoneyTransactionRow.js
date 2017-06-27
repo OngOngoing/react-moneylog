@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {Button} from 'semantic-ui-react'
 import firebase from 'firebase'
 
 export default class MoneyTransactionRow extends Component {
@@ -9,7 +10,7 @@ export default class MoneyTransactionRow extends Component {
                 <td>{this.props.transaction.money}</td>
                 <td>{this.props.transaction.date.toString()}</td>
                 <td>{this.props.transaction.info}</td>
-                <td><button onClick={this.handleRemove}>Remove</button></td>
+                <td><Button negative size="mini" onClick={this.handleRemove}>Remove</Button></td>
             </tr>
         )
     }

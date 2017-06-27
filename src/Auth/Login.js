@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
+import {Button} from 'semantic-ui-react'
 
 export default class Login extends Component {
     
     render() {
         return (<div>
             {!this.props.loggedIn ? 
-            <button onClick={this.onLogin}>Login</button> 
+            <Button primary onClick={this.onLogin}>Login</Button> 
             :
-            <button onClick={this.onLogout}>Logout</button>
+            <Button primary onClick={this.onLogout}>Logout</Button>
             }</div>)
     }
 

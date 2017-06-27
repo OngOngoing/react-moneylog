@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
 import firebase from 'firebase'
+import {Divider} from 'semantic-ui-react'
 
 export default class MoneyTransactionList extends Component {
     state = {
@@ -36,7 +37,9 @@ export default class MoneyTransactionList extends Component {
         const rows = Object.keys(this.state.transactions).map(key => {
             const transaction = this.state.transactions[key]
             transaction.key = key
-            return (<MoneyTransactionRow key={key} transaction={transaction} uid={this.state.user.uid}/>)
+            return (
+                <MoneyTransactionRow key={key} transaction={transaction} uid={this.state.user.uid}/>
+            )
             
         })
         return (
