@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 
 export default class MoneyTransactionRow extends Component {
     render() {
@@ -8,7 +9,12 @@ export default class MoneyTransactionRow extends Component {
                 <td>{this.props.transaction.money}</td>
                 <td>{this.props.transaction.date.toString()}</td>
                 <td>{this.props.transaction.info}</td>
+                <td><button onClick={this.handleRemove}>Remove</button></td>
             </tr>
         )
+    }
+
+    handleRemove = (event) => {
+        firebase.database().ref('users/' + this.props.uid).child(this.props.transaction.key).remove()
     }
 }

@@ -14,8 +14,12 @@ export default class MoneyTransactionList extends Component {
             if(firebaseUser) {
                 this.setState({user: firebaseUser})
                 firebase.database().ref('users/'+ this.state.user.uid).on('value', snapshot => {
-                    if(snapshot.val()) 
+                    if(snapshot.val()) {
                         this.setState({transactions: snapshot.val()})
+                    }
+                    else {
+                        this.setState({transactions: {}})
+                    }
                 })
             }
             else {
@@ -30,8 +34,9 @@ export default class MoneyTransactionList extends Component {
             return false
         }
         const rows = Object.keys(this.state.transactions).map(key => {
-            const transaction = this.state.transactions[key];
-            return (<MoneyTransactionRow key={key} transaction={transaction}/>)
+            const transaction = this.state.transactions[key]
+            transaction.key = key
+            return (<MoneyTransactionRow key={key} transaction={transaction} uid={this.state.user.uid}/>)
             
         })
         return (
@@ -51,7 +56,6 @@ export default class MoneyTransactionList extends Component {
             </div>
         )
     }
-
     //  addEvent = (moneyTransaction) => {
     //      this.setState({ transactions: [...this.state.transactions, moneyTransaction] });
     //  }
