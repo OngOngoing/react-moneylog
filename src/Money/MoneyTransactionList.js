@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
 import firebase from 'firebase'
-import {Table, Segment, Statistic} from 'semantic-ui-react'
+import {Table, Segment, Statistic, Container, Header} from 'semantic-ui-react'
 
 export default class MoneyTransactionList extends Component {
     state = {
@@ -69,8 +69,9 @@ export default class MoneyTransactionList extends Component {
             
         })
         return (
-            <div>
+            <Container>
                 <Segment raised>
+                    <Header as='h2'>Transactions</Header>
                     <Table selectable fixed>
                         {tableHeader}
                         <Table.Body>{rows}</Table.Body>
@@ -78,7 +79,7 @@ export default class MoneyTransactionList extends Component {
                     <Statistic label='Total' value={'$'+ this.calculateTotalMoney()} />
                 </Segment>
                 <div>{this.state.user && <NewMoneyTransaction addEvent={this.addEvent} uid={this.state.user.uid}/>}</div>
-            </div>
+            </Container>
         )
     }
 
