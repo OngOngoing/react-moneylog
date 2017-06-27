@@ -15,6 +15,8 @@ export default class MoneyTransactionRow extends Component {
     }
 
     handleRemove = (event) => {
+        const key = this.props.transaction.key
         firebase.database().ref('users/' + this.props.uid).child(this.props.transaction.key).remove()
+        console.log(`transaction ${key} removed`)
     }
 }

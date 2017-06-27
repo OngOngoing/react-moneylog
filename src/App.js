@@ -10,14 +10,12 @@ class App extends Component {
   state = {
     loggedIn: false,
     user: {},
-    transactions: []
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
       if(firebaseUser) {
         this.setState({loggedIn : true, user: firebaseUser})
-        //this.setState({transactions: this.loadTransactionsFromDatabase()})
       }
       else {
         this.setState({loggedIn : false, user: firebaseUser})
@@ -30,7 +28,7 @@ class App extends Component {
       <div className="App">
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+          <h2>Welcome to React-MoneyLog</h2>
         </div>
         <Login loggedIn={this.state.loggedIn} auth={firebase.auth}/>
         <p className="App-intro">
@@ -41,13 +39,6 @@ class App extends Component {
         </MuiThemeProvider>
       </div>
     );
-  }
-
-  loadTransactionsFromDatabase() {
-    firebase.database().ref('users/'+ this.state.user.uid).on('value', snapshot => {
-      console.log(snapshot.val())
-      return snapshot.val()
-    })
   }
 
 }

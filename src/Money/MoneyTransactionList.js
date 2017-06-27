@@ -30,7 +30,7 @@ export default class MoneyTransactionList extends Component {
 
 
     render() {
-        if(!Object.keys(this.state.transactions)) {
+        if(!this.state.user || !Object.keys(this.state.transactions)) {
             return false
         }
         const rows = Object.keys(this.state.transactions).map(key => {
@@ -56,7 +56,5 @@ export default class MoneyTransactionList extends Component {
             </div>
         )
     }
-    //  addEvent = (moneyTransaction) => {
-    //      this.setState({ transactions: [...this.state.transactions, moneyTransaction] });
-    //  }
+
 }
