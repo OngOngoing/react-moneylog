@@ -1,17 +1,19 @@
 import React, { Component } from 'react'
-import {Button} from 'semantic-ui-react'
+import {Button, Table} from 'semantic-ui-react'
 import firebase from 'firebase'
 
 export default class MoneyTransactionRow extends Component {
     render() {
+        const isPositive = this.props.transaction.type == '+'
+        const amountType = this.props.transaction.type == '+' ? "Income" : "Outcome"
         return (
-            <tr>
-                <td>{this.props.transaction.type}</td>
-                <td>{this.props.transaction.money}</td>
-                <td>{this.props.transaction.date.toString()}</td>
-                <td>{this.props.transaction.info}</td>
-                <td><Button negative size="mini" onClick={this.handleRemove}>Remove</Button></td>
-            </tr>
+            <Table.Row negative={!isPositive} positive={isPositive}>
+                <Table.Cell>{this.props.transaction.date.toString()}</Table.Cell>
+                <Table.Cell>{this.props.transaction.info}</Table.Cell>
+                <Table.Cell>{amountType}</Table.Cell>
+                <Table.Cell>{this.props.transaction.money}</Table.Cell>
+                <Table.Cell><Button negative size="mini" onClick={this.handleRemove}>Remove</Button></Table.Cell>
+            </Table.Row>
         )
     }
 

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {Button, Input, Label, Dropdown, Select} from 'semantic-ui-react'
+import {Button, Input, Label, Select} from 'semantic-ui-react'
 import firebase from 'firebase'
 
 export default class NewMoneyTransaction extends Component {
@@ -24,7 +24,7 @@ export default class NewMoneyTransaction extends Component {
                         <Select value={this.state.type} onChange={this.handleChange('type')} compact options={typeOptions}/>
                     </Input>
                     <input type="date" value={this.state.date} onChange={this.handleChange('date')}/>
-                    <input type="text" value={this.state.info} onChange={this.handleChange('info')}/>
+                    <Input placeholder='Info...' type="text" value={this.state.info} onChange={this.handleChange('info')} />
                     <Button primary>Submit</Button>
                 </form>
             </div>

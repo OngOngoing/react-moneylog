@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
 import firebase from 'firebase'
-import {Divider} from 'semantic-ui-react'
+import {Table} from 'semantic-ui-react'
 
 export default class MoneyTransactionList extends Component {
     state = {
@@ -34,6 +34,18 @@ export default class MoneyTransactionList extends Component {
         if(!this.state.user || !Object.keys(this.state.transactions)) {
             return false
         }
+
+        const tableHeader = (
+            <Table.Header>
+                <Table.Row>
+                    <Table.HeaderCell>Date</Table.HeaderCell>
+                    <Table.HeaderCell>Info</Table.HeaderCell>
+                    <Table.HeaderCell>Type</Table.HeaderCell>
+                    <Table.HeaderCell>Amount</Table.HeaderCell>
+                </Table.Row>
+            </Table.Header>
+        )
+
         const rows = Object.keys(this.state.transactions).map(key => {
             const transaction = this.state.transactions[key]
             transaction.key = key
@@ -44,17 +56,10 @@ export default class MoneyTransactionList extends Component {
         })
         return (
             <div>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Money</th>
-                            <th>Date</th>
-                            <th>Info</th>
-                        </tr>
-                    </thead>
-                    <tbody>{rows}</tbody>
-                </table>
+                <Table celled selectable>
+                    {tableHeader}
+                    <Table.Body>{rows}</Table.Body>
+                </Table>
                 <div>{this.state.user && <NewMoneyTransaction addEvent={this.addEvent} uid={this.state.user.uid}/>}</div>
             </div>
         )
