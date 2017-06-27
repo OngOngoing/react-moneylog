@@ -8,17 +8,19 @@ import firebase from 'firebase'
 
 class App extends Component {
   state = {
-    loggedIn: false
+    loggedIn: false,
+    user: {},
+    transactions: []
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(firebaseUser => {
-      console.log(firebaseUser)
       if(firebaseUser) {
-        this.setState({loggedIn : true})
+        this.setState({loggedIn : true, user: firebaseUser})
+        //this.setState({transactions: this.loadTransactionsFromDatabase()})
       }
       else {
-        this.setState({loggedIn : false})
+        this.setState({loggedIn : false, user: firebaseUser})
       }
     })
   }
@@ -40,6 +42,16 @@ class App extends Component {
       </div>
     );
   }
+
+  loadTransactionsFromDatabase() {
+    firebase.database().ref('users/'+ this.state.user.uid).on('value', snapshot => {
+      console.log(snapshot.val())
+      return snapshot.val()
+    })
+  }
+
 }
+
+
 
 export default App;

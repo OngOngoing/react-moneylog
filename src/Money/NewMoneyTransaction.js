@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
+import firebase from 'firebase'
 
 export default class NewMoneyTransaction extends Component {
-    /* global firebase */
     state = {
         money: 0,
         type: '+',
@@ -30,7 +30,7 @@ export default class NewMoneyTransaction extends Component {
             'date' : date,
             'info': info
         }
-        firebase.database().ref('user/db').push(transactionData)
+        firebase.database().ref('users/' + this.props.uid).push(transactionData)
     }
 
     handleMoneyChange = (event) => {
@@ -42,14 +42,8 @@ export default class NewMoneyTransaction extends Component {
 
     handleSubmit = (event) => {
         event.preventDefault()
-        let transaction = {
-            'money': this.state.money,
-            'type': this.state.type,
-            'date': this.state.date,
-            'info': this.state.info,
-        }
         //this.props.addEvent(transaction)
-        this.writeDataToFirebase(this.state.money, this.state.type, this.state.date.toString(), this.state.info)
+        this.writeDataToFirebase(this.state.money, this.state.type, this.state.date.toJSON(), this.state.info)
         this.setState({money: 0, date: new Date(), info:'' })
     }
 }
