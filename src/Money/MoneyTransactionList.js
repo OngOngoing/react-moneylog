@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import MoneyTransactionRow from './MoneyTransactionRow'
 import NewMoneyTransaction from './NewMoneyTransaction'
 import firebase from 'firebase'
-import {Table} from 'semantic-ui-react'
+import {Table, Segment, Statistic} from 'semantic-ui-react'
 
 export default class MoneyTransactionList extends Component {
     state = {
@@ -29,19 +29,33 @@ export default class MoneyTransactionList extends Component {
         })
     }
 
+    calculateTotalMoney() {
+        return this.formatNumber(Object.keys(this.state.transactions).map(key => {
+            const value = this.state.transactions[key].money
+            const sign = this.state.transactions[key].type
+            return parseFloat(sign+value)
+        }).reduce((acc, cur)=> {
+            return acc+cur
+        }, 0))
+    }
+
+    formatNumber(number) {
+        return number.toFixed(2).replace(/(\d)(?=(\d{3})+\.)/g, '$1,')
+    }
+
 
     render() {
         if(!this.state.user || !Object.keys(this.state.transactions)) {
             return false
         }
-
         const tableHeader = (
             <Table.Header>
                 <Table.Row>
-                    <Table.HeaderCell>Date</Table.HeaderCell>
-                    <Table.HeaderCell>Info</Table.HeaderCell>
-                    <Table.HeaderCell>Type</Table.HeaderCell>
-                    <Table.HeaderCell>Amount</Table.HeaderCell>
+                    <Table.HeaderCell width={2}>Date</Table.HeaderCell>
+                    <Table.HeaderCell width={4}>Info</Table.HeaderCell>
+                    <Table.HeaderCell width={1}>Type</Table.HeaderCell>
+                    <Table.HeaderCell width={2}>Amount</Table.HeaderCell>
+                    <Table.HeaderCell width={1}></Table.HeaderCell>
                 </Table.Row>
             </Table.Header>
         )
@@ -56,10 +70,13 @@ export default class MoneyTransactionList extends Component {
         })
         return (
             <div>
-                <Table celled selectable>
-                    {tableHeader}
-                    <Table.Body>{rows}</Table.Body>
-                </Table>
+                <Segment raised>
+                    <Table selectable fixed>
+                        {tableHeader}
+                        <Table.Body>{rows}</Table.Body>
+                    </Table>
+                    <Statistic label='Total' value={'$'+ this.calculateTotalMoney()} />
+                </Segment>
                 <div>{this.state.user && <NewMoneyTransaction addEvent={this.addEvent} uid={this.state.user.uid}/>}</div>
             </div>
         )
