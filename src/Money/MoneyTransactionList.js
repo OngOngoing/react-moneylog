@@ -70,6 +70,7 @@ export default class MoneyTransactionList extends Component {
         })
         return (
             <Container>
+                <div>{this.state.user && <NewMoneyTransaction addEvent={this.addEvent} uid={this.state.user.uid}/>}</div>
                 <Segment raised>
                     <Header as='h2'>Transactions</Header>
                     <Table selectable fixed>
@@ -78,7 +79,6 @@ export default class MoneyTransactionList extends Component {
                     </Table>
                     <Statistic label='Total' value={'$'+ this.calculateTotalMoney()} />
                 </Segment>
-                <div>{this.state.user && <NewMoneyTransaction addEvent={this.addEvent} uid={this.state.user.uid}/>}</div>
             </Container>
         )
     }

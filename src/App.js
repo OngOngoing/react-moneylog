@@ -28,9 +28,11 @@ class App extends Component {
         <div className="App-header">
           <Icon color="teal" name='dollar' size='huge' className="App-logo" alt="logo" />
           <h2>Welcome to React-MoneyLog</h2>
+          <Login loggedIn={this.state.loggedIn} auth={firebase.auth}/>
         </div>
-        <Login loggedIn={this.state.loggedIn} auth={firebase.auth}/>
-        <MoneyTransactionList/>
+        <div style={{padding:'20px'}}>
+          <MoneyTransactionList/>
+        </div>
       </div>
     );
   }

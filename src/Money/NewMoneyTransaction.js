@@ -25,7 +25,7 @@ export default class NewMoneyTransaction extends Component {
         ]
         return (
             <div>
-                <Button onClick={this.show('blurring')}>Add New Transaction</Button>
+                <Button color="teal" size="huge" onClick={this.show('blurring')}>Add New Transaction</Button>
 
                 <Modal dimmer={dimmer} open={open} onClose={this.close}>
                     <Modal.Header>Add New Transaction</Modal.Header>

@@ -8,7 +8,7 @@ export default class Login extends Component {
             {!this.props.loggedIn ? 
             <Button primary onClick={this.onLogin}>Login</Button> 
             :
-            <Button primary onClick={this.onLogout}>Logout</Button>
+            <Button inverted color="blue" onClick={this.onLogout}>Logout</Button>
             }</div>)
     }
 
